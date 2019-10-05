@@ -10,12 +10,9 @@ class Reviews {
     this.loadCollection();
   }
 
-  get getCollection() {
-    return this.collection;
-  }
-
   getSortedCollection(predicate, order) {
     const sortBy = ['entryDate', 'travelDate'];
+
     if (!sortBy.includes(predicate)) {
       return this.sortByDate('entryDate', order);
     }
@@ -33,15 +30,15 @@ class Reviews {
   }
 
   sortByDate(dateKey, order) {
-    if (order === 'desc') {
-      return this.collection.sort(
-        (a, b) => new Date(b[dateKey]) - new Date(a[dateKey])
+    if (order === 'asc') {
+      return [...this.collection].sort(
+        (a, b) => new Date(a.data[dateKey]) - new Date(b.data[dateKey])
       );
     }
 
-    // by default return ascending order.
-    return this.collection.sort(
-      (a, b) => new Date(a[dateKey]) - new Date(b[dateKey])
+    // by default return desc order.
+    return [...this.collection].sort(
+      (a, b) => new Date(b.data[dateKey]) - new Date(a.data[dateKey])
     );
   }
 
