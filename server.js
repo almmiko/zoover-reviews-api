@@ -1,5 +1,6 @@
 const express = require('express');
 const config = require('config');
+const cors = require('cors');
 const logger = require('./utils/logger');
 const router = require('./routes/router');
 
@@ -7,7 +8,7 @@ async function createApp() {
   const app = express();
 
   app.disable('x-powered-by');
-
+  app.use(cors()); // for prod use add whitelist
   app.use(router);
 
   // Send a consistent 404 response
