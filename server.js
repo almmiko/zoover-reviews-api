@@ -5,7 +5,7 @@ const logger = require('./utils/logger');
 const router = require('./routes/router');
 const errorHandler = require('./middlewares/errorHandler');
 
-async function createApp() {
+function createApp() {
   const app = express();
 
   app.disable('x-powered-by');
@@ -18,7 +18,7 @@ async function createApp() {
 }
 
 async function runServer() {
-  const app = await createApp();
+  const app = createApp();
   logger.info(`Starting server on port ${config.PORT}`);
   app.listen(config.PORT);
   return app;
@@ -26,4 +26,5 @@ async function runServer() {
 
 module.exports = {
   runServer,
+  createApp,
 };
