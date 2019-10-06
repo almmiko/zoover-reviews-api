@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const db = require('../data/reviews.json');
 const Review = require('../models/review');
 const logger = require('../utils/logger');
@@ -6,40 +7,56 @@ const calculateStats = require('../utils/calculateStats');
 class Reviews {
   constructor() {
     this.collection = [];
-
     this.loadCollection();
   }
 
-  getSortedCollection(predicate, order) {
+  getSortedCollection(predicate, order, collection) {
     const sortBy = ['entryDate', 'travelDate'];
 
-    if (!sortBy.includes(predicate)) {
-      return this.sortByDate('entryDate', order);
+    if (!collection) {
+      collection = this.collection;
     }
 
-    return this.sortByDate(predicate, order);
+    if (!sortBy.includes(predicate)) {
+      return this.sortByDate('entryDate', order, collection);
+    }
+
+    return this.sortByDate(predicate, order, collection);
   }
 
-  filterByTraveledWith(value, collection) {
+  filterByTraveledWith(value) {
     const filter = value && value.toUpperCase();
     const filters = ['FAMILY', 'FRIENDS', 'OTHER', 'COUPLE', 'SINGLE'];
 
     if (!filters.includes(filter)) { return [] }
 
-    return collection.filter(item => item.traveledWith === filter);
+    return this.collection.filter(item => item.traveledWith === filter);
   }
 
-  sortByDate(dateKey, order) {
+  sortByDate(dateKey, order, collection) {
     if (order === 'asc') {
-      return [...this.collection].sort(
+      return [...collection].sort(
         (a, b) => new Date(a.data[dateKey]) - new Date(b.data[dateKey])
       );
     }
 
     // by default return desc order.
-    return [...this.collection].sort(
+    return [...collection].sort(
       (a, b) => new Date(b.data[dateKey]) - new Date(a.data[dateKey])
     );
+  }
+
+  paginate(page, limit, collection) {
+    const offset = (page - 1) * limit;
+    const totalPages = Math.ceil(collection.length / limit);
+    const paginatedCollection = _.drop(collection, offset).slice(0, limit);
+
+    const meta = paginatedCollection.length ? { page, limit, totalPages, totalItems: collection.length } : { hasNext: false };
+
+    return {
+      meta,
+      paginatedCollection,
+    }
   }
 
 

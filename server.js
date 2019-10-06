@@ -3,6 +3,7 @@ const config = require('config');
 const cors = require('cors');
 const logger = require('./utils/logger');
 const router = require('./routes/router');
+const errorHandler = require('./middlewares/errorHandler');
 
 async function createApp() {
   const app = express();
@@ -11,8 +12,7 @@ async function createApp() {
   app.use(cors()); // for prod use add whitelist
   app.use(router);
 
-  // Send a consistent 404 response
-  // Log thrown errors
+  app.use(errorHandler);
 
   return app;
 }

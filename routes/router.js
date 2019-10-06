@@ -1,7 +1,8 @@
-const router = require('express-promise-router')();
+const router = require('express').Router();
+const validatePaginationParams = require('../middlewares/validatePaginationParams');
 const ReviewsController = require('../controllers/reviewsController');
 
-router.get('/v1/reviews', (req, res) => {
+router.get('/v1/reviews', validatePaginationParams, (req, res) => {
   const reviews = ReviewsController.getReviews(req.query);
 
   res.json({

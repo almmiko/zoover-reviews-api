@@ -1,25 +1,23 @@
-const _ = require('lodash');
 const reviews = require('../service/reviews');
 const calculateStats = require('../utils/calculateStats');
 
 class ReviewsController {
   static getReviews(query) {
-    const { page = 1, limit = 10, sortBy, traveledWith, order } = query;
+    const { page = 1, limit = 20, sortBy, traveledWith, order } = query;
     // note: set maximum limit value.
-    //todo: handle page, limit NaN case.
-    //todo handle query params pollutions
 
-    let collection = reviews.getSortedCollection(sortBy, order);
+    //filter
+    //sort
+    //paginate
+    let collection;
 
     if (traveledWith) {
-      collection = reviews.filterByTraveledWith(traveledWith, collection);
+      collection = reviews.filterByTraveledWith(traveledWith);
     }
 
-    const offset = (page - 1) * limit;
-    const totalPages = Math.ceil(collection.length / limit);
-    const paginatedCollection = _.drop(collection, offset).slice(0, limit);
+    collection = reviews.getSortedCollection(sortBy, order, collection);
 
-    const meta = paginatedCollection.length ? { page, limit, totalPages, totalItems: collection.length } : { hasNext: false };
+    const { meta, paginatedCollection } = reviews.paginate(page, limit, collection);
 
     return {
       collection: paginatedCollection,
