@@ -2,12 +2,14 @@ const { reviewsInstance } = require('../service/reviews');
 
 class ReviewsController {
   static getReviews(query) {
-    const { page = 1, limit = 20, sortBy, traveledWith, order } = query;
+    const {
+      page = 1, limit = 20, sortBy, traveledWith, order,
+    } = query;
     // note: set maximum limit value.
 
-    //filter
-    //sort
-    //paginate
+    // filter
+    // sort
+    // paginate
     let collection;
 
     if (traveledWith) {

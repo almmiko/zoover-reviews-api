@@ -1,3 +1,5 @@
+/* eslint no-unused-vars: "off" */
+
 const logger = require('../utils/logger');
 
 module.exports = (err, req, res, next) => {

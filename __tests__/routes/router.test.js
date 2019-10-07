@@ -1,4 +1,3 @@
-const router = require('../../routes/router');
 
 const supertest = require('supertest');
 const config = require('config');
@@ -29,5 +28,3 @@ describe('router', () => {
     expect(response.status).toEqual(200);
   });
 });
-
-

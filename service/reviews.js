@@ -14,37 +14,38 @@ class Reviews {
 
   getSortedCollection(predicate, order, collection) {
     const sortBy = ['entryDate', 'travelDate'];
+    let originalCollection = collection;
 
     if (!collection) {
-      collection = this.collection;
+      originalCollection = this.collection;
     }
 
     if (!sortBy.includes(predicate)) {
-      return this.sortByDate('entryDate', order, collection);
+      return this.sortByDate('entryDate', order, originalCollection);
     }
 
-    return this.sortByDate(predicate, order, collection);
+    return this.sortByDate(predicate, order, originalCollection);
   }
 
   filterByTraveledWith(value) {
     const filter = value && value.toUpperCase();
     const filters = ['FAMILY', 'FRIENDS', 'OTHER', 'COUPLE', 'SINGLE'];
 
-    if (!filters.includes(filter)) { return [] }
+    if (!filters.includes(filter)) { return []; }
 
-    return this.collection.filter(item => item.traveledWith === filter);
+    return this.collection.filter((item) => item.traveledWith === filter);
   }
 
   sortByDate(dateKey, order, collection) {
     if (order === 'asc') {
       return [...collection].sort(
-        (a, b) => new Date(a.data[dateKey]) - new Date(b.data[dateKey])
+        (a, b) => new Date(a.data[dateKey]) - new Date(b.data[dateKey]),
       );
     }
 
     // by default return desc order.
     return [...collection].sort(
-      (a, b) => new Date(b.data[dateKey]) - new Date(a.data[dateKey])
+      (a, b) => new Date(b.data[dateKey]) - new Date(a.data[dateKey]),
     );
   }
 
@@ -53,17 +54,19 @@ class Reviews {
     const totalPages = Math.ceil(collection.length / limit);
     const paginatedCollection = _.drop(collection, offset).slice(0, limit);
 
-    const meta = paginatedCollection.length ? { page, limit, totalPages, totalItems: collection.length } : { hasNext: false };
+    const meta = paginatedCollection.length ? {
+      page, limit, totalPages, totalItems: collection.length,
+    } : { hasNext: false };
 
     return {
       meta,
       paginatedCollection,
-    }
+    };
   }
 
   getReviewsStats() {
     return calculateStats.getStats;
-  };
+  }
 
   loadCollection() {
     logger.info('Loading reviews...');
@@ -79,5 +82,5 @@ class Reviews {
 
 module.exports = {
   Reviews, // for testing
-  reviewsInstance: new Reviews() // singleton
+  reviewsInstance: new Reviews(), // singleton
 };
