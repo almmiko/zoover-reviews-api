@@ -2,7 +2,9 @@ const _ = require('lodash');
 const db = require('../data/reviews.json');
 const Review = require('../models/review');
 const logger = require('../utils/logger');
-const calculateStats = require('../utils/calculateStats');
+const CalculateStats = require('../utils/calculateStats');
+
+const calculateStats = new CalculateStats();
 
 class Reviews {
   constructor() {
@@ -59,6 +61,9 @@ class Reviews {
     }
   }
 
+  getReviewsStats() {
+    return calculateStats.getStats;
+  };
 
   loadCollection() {
     logger.info('Loading reviews...');
@@ -72,4 +77,7 @@ class Reviews {
   }
 }
 
-module.exports = new Reviews();
+module.exports = {
+  Reviews, // for testing
+  reviewsInstance: new Reviews() // singleton
+};

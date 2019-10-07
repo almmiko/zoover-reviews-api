@@ -33,16 +33,12 @@ class Review {
     return _.get(this, 'data.ratings');
   }
 
-  get getData() {
+  toString() {
     return this.data;
   }
 
-  toString() {
-    return this.getData;
-  }
-
   toJSON() {
-    return this.getData;
+    return this.data;
   }
 }
 

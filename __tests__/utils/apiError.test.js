@@ -1,4 +1,4 @@
-const ApiError = require('../apiError');
+const ApiError = require('../../utils/apiError');
 
 describe('apiError', () => {
   test('should return message and status code', () => {

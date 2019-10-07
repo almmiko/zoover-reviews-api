@@ -77,4 +77,4 @@ class CalculateStats {
   }
 }
 
-module.exports = new CalculateStats();
+module.exports = CalculateStats;

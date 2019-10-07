@@ -1,5 +1,4 @@
-const reviews = require('../service/reviews');
-const calculateStats = require('../utils/calculateStats');
+const { reviewsInstance } = require('../service/reviews');
 
 class ReviewsController {
   static getReviews(query) {
@@ -12,12 +11,12 @@ class ReviewsController {
     let collection;
 
     if (traveledWith) {
-      collection = reviews.filterByTraveledWith(traveledWith);
+      collection = reviewsInstance.filterByTraveledWith(traveledWith);
     }
 
-    collection = reviews.getSortedCollection(sortBy, order, collection);
+    collection = reviewsInstance.getSortedCollection(sortBy, order, collection);
 
-    const { meta, paginatedCollection } = reviews.paginate(page, limit, collection);
+    const { meta, paginatedCollection } = reviewsInstance.paginate(page, limit, collection);
 
     return {
       collection: paginatedCollection,
@@ -26,7 +25,7 @@ class ReviewsController {
   }
 
   static getReviewsStats() {
-    return calculateStats.getStats;
+    return reviewsInstance.getReviewsStats();
   }
 }
 
