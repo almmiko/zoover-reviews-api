@@ -5,7 +5,7 @@ describe('ReviewsController', () => {
   reviewsInstance.getReviewsStats = jest.fn();
   reviewsInstance.filterByTraveledWith = jest.fn();
   reviewsInstance.getSortedCollection = jest.fn();
-  reviewsInstance.paginate = jest.fn(() => ({ meta: 'test', paginatedCollection: 'test'}));
+  reviewsInstance.paginate = jest.fn(() => ({ meta: 'test', paginatedCollection: 'test' }));
 
   test('getReviewsStats should be called', () => {
     ReviewsController.getReviewsStats();
@@ -20,7 +20,7 @@ describe('ReviewsController', () => {
   });
 
   test('should call filter, sort, paginate for collection', () => {
-    ReviewsController.getReviews({ traveledWith: 'OTHER'});
+    ReviewsController.getReviews({ traveledWith: 'OTHER' });
     expect(reviewsInstance.getSortedCollection).toBeCalled();
     expect(reviewsInstance.paginate).toBeCalled();
     expect(reviewsInstance.filterByTraveledWith).toBeCalled();

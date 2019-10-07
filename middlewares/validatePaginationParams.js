@@ -8,5 +8,5 @@ module.exports = function validatePaginationParams(req, res, next) {
     return next(new ApiError('Invalid values for page or limit. Expected integer', 400));
   }
 
-  next();
+  return next();
 };

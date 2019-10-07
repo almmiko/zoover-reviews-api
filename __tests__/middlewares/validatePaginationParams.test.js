@@ -7,7 +7,7 @@ describe('validatePaginationParams', () => {
       query: {
         page: 1,
         limit: 1,
-      }
+      },
     };
     const next = jest.fn();
 
@@ -20,7 +20,7 @@ describe('validatePaginationParams', () => {
       query: {
         page: 'test',
         limit: 'test',
-      }
+      },
     };
     const next = jest.fn();
 
