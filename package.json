@@ -7,6 +7,7 @@
     "start": "node run.js",
     "test": "NODE_ENV=testing jest --verbose",
     "lint": "eslint .",
+    "prepush": "npm run lint && npm run test",
     "coverage": "jest --coverage"
   },
   "dependencies": {
@@ -26,7 +27,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "pre-push": "npm run lint"
+      "pre-push": "npm run prepush"
     }
   },
   "devDependencies": {
